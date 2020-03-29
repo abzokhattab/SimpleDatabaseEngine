@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Vector;
 
 public class Page implements Serializable{
 
 
 	private static final long serialVersionUID = 1L;
 	
-	public ArrayList<Hashtable<String, Object>> page;
+	public Vector<Hashtable<String, Object>> page;
 	public int max;	public Page(){
-		page = new ArrayList<>();
+		page = new Vector<Hashtable<String,Object>>();
 		File configFile = new File("config/DBApp.config");
 		try {
 		    FileReader reader = new FileReader(configFile);
