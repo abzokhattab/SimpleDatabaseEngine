@@ -257,7 +257,7 @@ public class DB {
 
 	}
 
-	public static boolean IsContain(Page page, String strClusteringKey, Object value) {
+	public static int IsContain(Page page, String strClusteringKey, Object value) {
 		String y = page.pageList.get(0).get(strClusteringKey).getClass()
 				.getName();
 		// System.out.println(this.pageList.get(i).get(strClusteringKey)
@@ -269,56 +269,74 @@ public class DB {
 					.compareTo((Integer) value) != 1
 					&& ((Integer) page.pageList.get(page.pageList.size() - 1)
 							.get(strClusteringKey)).compareTo((Integer) value) != -1) {
-				return true;
+				return 0;
 			}
+			else if (((Integer) page.pageList.get(0).get(strClusteringKey))
+					.compareTo((Integer) value) == 1)
+				return 1 ; 
+			else return -1 ; 
 		} else if (y.equals("java.lang.Double")) {
 			if (((Double) page.pageList.get(0).get(strClusteringKey))
 					.compareTo((Double) value) != 1
 					&& ((Double) page.pageList.get(page.pageList.size() - 1)
 							.get(strClusteringKey)).compareTo((Double) value) != -1) {
-				return true;
+				return 0;
 			}
+			else if (((Double) page.pageList.get(0).get(strClusteringKey))
+					.compareTo((Double) value) == 1)
+				return 1 ; 
+			else return -1 ; 
 		} else if (y.equals("java.util.Date")) {
 			if (((Date) page.pageList.get(0).get(strClusteringKey))
 					.compareTo((Date) value) != 1
 					&& ((Date) page.pageList.get(page.pageList.size() - 1).get(
 							strClusteringKey)).compareTo((Date) value) != -1) {
-				return true;
+				return 0;
 
 			}
+			else if (((Date) page.pageList.get(0).get(strClusteringKey))
+					.compareTo((Date) value) == 1)
+				return 1 ; 
+			else return -1 ; 
 		} else if (y.equals("java.lang.String")) {
 			if (((String) page.pageList.get(0).get(strClusteringKey))
 					.compareTo((String) value) != 1
 					&& ((String) page.pageList.get(page.pageList.size() - 1)
 							.get(strClusteringKey)).compareTo((String) value) != -1) {
-				return true;
+				return 0;
 
 			}
+			else if (((String) page.pageList.get(0).get(strClusteringKey))
+					.compareTo((String) value) == 1)
+				return 1 ; 
+			else return -1 ; 
 		} else if (y.equals("java.lang.Boolean")) {
 			if (((Boolean) page.pageList.get(0).get(strClusteringKey))
 					.compareTo((Boolean) value) != 1
 					&& ((Boolean) page.pageList.get(page.pageList.size() - 1)
 							.get(strClusteringKey)).compareTo((Boolean) value) != -1) {
-				return true;
+				return 0;
 			}
+			else if (((Boolean) page.pageList.get(0).get(strClusteringKey))
+					.compareTo((Boolean) value) == 1)
+				return 1 ; 
+			else return -1 ; 
 		}
 
-		return false;
+		return 0;
 
 	}
 
-	public int binarySearch(String strClusteringKey,Object value, String tableName) {
+	public int binarySearch(String strClusteringKey,Object value, String tableName) throws Exception {
 		int l = 0, r = this.numberofPages(tableName) - 1;
 		while (l <= r) {
 			int m = l + (r - l) / 2;
 
 			// Check if x is present at mid
-			if (IsContain(getPage(tableName, m+""),strClusteringKey,value))
+			if (IsContain(getPage(tableName, m+""),strClusteringKey,value)==0)
 				return m;
-
 			// If x greater, ignore left half
-			if (((String) this.pageList.get(m).get(strClusteringKey))
-					.compareTo(strClusteringKey) == -1)
+			if (IsContain(getPage(tableName, m+""),strClusteringKey,value)==-1)
 				l = m + 1;
 
 			// If x is smaller, ignore right half
@@ -326,8 +344,6 @@ public class DB {
 				r = m - 1;
 		}
 
-		// if we reach here, then element was
-		// not present
 		return -1;
 	}
 
@@ -444,7 +460,8 @@ public class DB {
 		y.put("ID", new Integer(102));
 		y.put("age", "20");
 		insertIntoTable("student", y);
-		System.out.println(numberofPages("student"));
+		
+		System.out.println(IsContain(getPage("student", "0"), "ID", 200));
 		getPage("student", "0").ToString();
 		// updateTable("student","1",y);
 		// System.out.print(numberofPages("student"));}
