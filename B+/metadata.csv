@@ -1,0 +1,8 @@
+abkk,ab,java.lang.Integer,False,False,
+abkk,d,java.lang.Double,True,False,
+abkk,c,java.lang.Integer,False,False,
+abkk,TouchDate,java.util.Date,False,False
+student,ID,java.lang.Integer,True,False,
+student,Name,java.lang.String,False,False,
+student,age,java.lang.Integer,False,False,
+student,TouchDate,java.util.Date,False,False
